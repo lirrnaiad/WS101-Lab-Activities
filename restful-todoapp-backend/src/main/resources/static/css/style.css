@@ -1,0 +1,305 @@
+/* Base & Theme */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #0D0714;
+    --panel: #1A0F2B;
+    --input: #3E1671;
+    --primary: #9E78CF;
+    --primary-strong: #8C67C7;
+    --primary-soft: #B695E6;
+    --text: #FFFFFF;
+    --muted: #CBB8EA;
+    --border: rgba(158, 120, 207, 0.25);
+}
+
+body {
+    font-family: Inter, sans-serif;
+    background-color: var(--bg);
+    color-scheme: dark;
+}
+
+/* Task Input */
+.task-input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+    max-width: 860px;
+    margin: 24px auto;
+    padding: 16px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+}
+
+#user-filter,
+#task-input,
+#task-date-input,
+#task-user-input {
+    flex: 1 1 220px;
+    min-height: 44px;
+    padding: 12px 14px;
+    color: var(--text);
+    background: var(--input);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    outline: none;
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Make filter sit on its own row below the inputs */
+#user-filter {
+    flex: 1 1 100%;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M3.2 5.5l4.8 6 4.8-6H3.2z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 14px 14px;
+    padding-right: 34px;
+}
+
+#task-input::placeholder,
+#task-date-input::placeholder,
+#task-user-input::placeholder {
+    color: var(--muted);
+    opacity: 0.95;
+}
+
+#user-filter:hover,
+#task-input:hover,
+#task-date-input:hover,
+#task-user-input:hover { background: #4A1E84; }
+
+#user-filter:focus,
+#task-input:focus,
+#task-date-input:focus,
+#task-user-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(158, 120, 207, 0.35);
+}
+
+#task-date-input::-webkit-calendar-picker-indicator { filter: invert(1) opacity(0.9); }
+
+#add-task-button {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background-color: var(--primary);
+    background-image: url('../images/icons/add.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px 20px;
+    transition: transform 0.08s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#add-task-button:hover { background-color: var(--primary-soft); cursor: pointer; }
+#add-task-button:active { transform: scale(0.97); background-color: var(--primary-strong); }
+#add-task-button:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(158, 120, 207, 0.40); }
+
+/* Tasks Panel */
+.tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto 32px;
+    padding: 16px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+}
+
+#to-do-list,
+#done-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+}
+
+/* Task Items */
+#to-do-list li,
+#done-list li {
+    position: relative;
+    z-index: 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 8px 12px;
+    align-items: center;
+    width: 100%;
+    min-height: 72px;
+    padding: 12px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.03));
+    transition: transform 0.08s ease, box-shadow 0.12s ease, background 0.12s ease;
+    min-width: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+#to-do-list li.to-do { border-left: 4px solid var(--primary); color: #DCC9F6; }
+#done-list li.done,
+#to-do-list li.done { border-left: 4px solid #78CFB0; background: rgba(120, 207, 176, 0.03); color: rgba(188, 237, 220, 0.95); }
+
+#to-do-list li .description,
+#done-list li .description {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    font-weight: 600;
+    font-size: 1.02rem;
+    color: inherit;
+    white-space: nowrap;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#to-do-list li .task-date,
+#to-do-list li .task-user,
+#done-list li .task-date,
+#done-list li .task-user {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-self: start;
+    min-width: 0;
+    margin-right: 6px;
+    padding: 4px 8px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 999px;
+}
+
+#to-do-list li .actions,
+#done-list li .actions {
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-left: 6px;
+}
+
+/* Actions */
+.done-button,
+.edit-button,
+.remove-button {
+    width: 38px;
+    height: 38px;
+    padding: 6px;
+    line-height: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255,255,255,0.03);
+    border-radius: 8px;
+    transition: transform 0.08s ease, background-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.done-button:hover,
+.edit-button:hover,
+.remove-button:hover { cursor: pointer; background: rgba(255,255,255,0.03); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.32); }
+
+.done-button:active,
+.edit-button:active,
+.remove-button:active { transform: translateY(0) scale(0.98); }
+
+.done-button { border-color: rgba(120,207,176,0.25); }
+.done-button:hover { background: rgba(120,207,176,0.14); box-shadow: 0 6px 18px rgba(120,207,176,0.18); }
+.edit-button { border-color: rgba(158,120,207,0.28); }
+.edit-button:hover { background: rgba(158,120,207,0.14); box-shadow: 0 6px 18px rgba(158,120,207,0.18); }
+.remove-button { border-color: rgba(255,99,132,0.22); }
+.remove-button:hover { background: rgba(255,99,132,0.12); box-shadow: 0 6px 18px rgba(255,99,132,0.18); }
+
+.done-button img,
+.edit-button img,
+.remove-button img,
+#to-do-list li .task-date img,
+#to-do-list li .task-user img,
+#done-list li .task-date img,
+#done-list li .task-user img { width: 18px; height: 18px; display: block; }
+
+#to-do-list li:hover,
+#done-list li:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,0.35); background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.05)); }
+
+#done-list li .description { text-decoration: line-through; opacity: 0.9; }
+
+/* Trackers */
+#todo-tracker,
+#done-tracker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    color: var(--text);
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.08));
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+#todo-tracker { box-shadow: inset 4px 0 0 0 var(--primary); }
+#done-tracker { box-shadow: inset 4px 0 0 0 #78CFB0; }
+
+.tasks .tasks-to-do,
+.tasks .tasks-done { display: flex; flex-direction: column; gap: 12px; padding-top: 4px; }
+
+/* Scroll Containers */
+.to-do-container,
+.done-container {
+    max-height: 420px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+
+.to-do-container::-webkit-scrollbar,
+.done-container::-webkit-scrollbar { width: 8px; height: 8px; }
+
+.to-do-container::-webkit-scrollbar-thumb,
+.done-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 8px; }
+
+.to-do-container::-webkit-scrollbar-track,
+.done-container::-webkit-scrollbar-track { background: transparent; }
+
+/* Responsive */
+@media (max-width: 640px) {
+    .task-input-container { justify-content: stretch; }
+    #user-filter,
+    #task-input,
+    #task-date-input,
+    #task-user-input { flex: 1 1 100%; }
+}
+
+@media (max-width: 480px) {
+    #to-do-list li,
+    #done-list li { grid-template-columns: 1fr; grid-template-rows: auto auto auto; }
+
+    #to-do-list li .actions,
+    #done-list li .actions { grid-column: 1 / 2; grid-row: 3 / 4; justify-self: end; }
+
+    .task-input-container,
+    .tasks { padding-left: 12px; padding-right: 12px; }
+
+    #todo-tracker,
+    #done-tracker { padding: 10px 12px; font-size: 0.98rem; }
+}

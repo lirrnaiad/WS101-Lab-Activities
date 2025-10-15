@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="css/style.css">
+        <title>To-do List</title>
+    </head>
+    <body>
+        <div class="task-input-container">
+            <input type="text" id="task-input" placeholder="Add a new task">
+            <input type="date" id="task-date-input" placeholder="Add a date">
+            <input type="text" id="task-user-input" placeholder="Add a user">
+            <button id="add-task-button"></button>
+            <select id="user-filter" aria-label="Filter by user">
+                <option value="*">All users</option>
+            </select>
+        </div>
+        <div class="tasks">
+            <div class="tasks-to-do">
+                <p id="todo-tracker">Tasks to do</p>
+                <div class="to-do-container">
+                    <ul id="to-do-list">
+                        <li class="to-do">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tasks-done">
+                <p id="done-tracker">Done</p>
+                <div class="done-container">
+                    <ul id="done-list">
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="js/index.js"></script>
+    </body>
+</html>
