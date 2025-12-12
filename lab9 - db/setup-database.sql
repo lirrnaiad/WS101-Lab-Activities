@@ -1,0 +1,2 @@
+CREATE DATABASE IF NOT EXISTS lab9_db;
+USE lab9_db;
